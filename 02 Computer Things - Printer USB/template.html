@@ -1,0 +1,368 @@
+<title>Cara Pakai Printer USB</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@500;700&family=Nunito:wght@800;900&display=swap">
+<style>
+:root{--bg:#0c1520;--panel:#142231;--ink:#eaf1f8;--mute:#93a8bc;--line:#2a3d52;--yel:#ffd84a;--red:#ff6a5f;--grn:#5fd89a;--blu:#5aaeff;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;padding-block:22px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:32px;align-items:start}
+@media(max-width:760px){.wrap{grid-template-columns:minmax(0,1fr)}.left{max-width:360px;width:100%;margin:0 auto}}
+.stage{position:relative;aspect-ratio:9/16;container-type:inline-size;background:#0f1d2b;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#world *{vector-effect:non-scaling-stroke}
+svg text{font-family:'Space Grotesk',Inter,sans-serif;font-weight:700;fill:#eaf1f8;paint-order:stroke;stroke:#0f1d2b;stroke-width:5px;stroke-linejoin:round}
+svg text.sub{font-family:Inter,sans-serif;font-weight:500;fill:#b9c9d9}
+.cap{position:absolute;left:6cqw;right:6cqw;bottom:9cqw;font:700 5.6cqw/1.28 'Space Grotesk',Inter,sans-serif;text-wrap:balance;text-shadow:0 2px 10px rgba(0,0,0,.6);min-height:3.8em}
+.cap span.w{color:#5d7186;transition:color .12s}
+.cap span.w.on{color:#fff}
+.cap span.w.cur{color:var(--yel)}
+.ctl{display:flex;gap:10px;align-items:center;margin-top:12px}
+.ctl button{font:600 14px Inter,sans-serif;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;min-width:84px}
+.ctl button:focus-visible,.scenes button:focus-visible{outline:2px solid var(--yel);outline-offset:2px}
+.ctl input{flex:1;min-width:0;accent-color:var(--yel)}
+.ctl output{font:500 13px Inter,sans-serif;color:var(--mute);font-variant-numeric:tabular-nums;min-width:74px;text-align:right}
+.eyebrow{font:600 12px Inter,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--yel);margin-bottom:8px}
+h1{font:700 30px/1.15 'Space Grotesk',Inter,sans-serif;margin:0 0 10px;text-wrap:balance}
+.lead{color:var(--mute);margin:0 0 22px;max-width:56ch}
+h2{font:600 12px Inter,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:26px 0 10px}
+.scenes{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.scenes button{width:100%;text-align:left;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:baseline;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:500 14px Inter,sans-serif;cursor:pointer}
+.scenes button[aria-current="true"]{background:var(--panel);border-color:var(--yel)}
+.scenes .n,.scenes .tm{color:var(--mute);font-variant-numeric:tabular-nums}
+.scenes .tm{font-size:13px}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 18px;margin:0;padding:0;list-style:none}
+.legend li{display:flex;gap:10px;align-items:center}
+.legend i{width:14px;height:14px;border-radius:4px;flex:none}
+.note{color:var(--mute);font-size:14px;max-width:60ch}
+</style>
+
+<div class="wrap">
+  <div class="left">
+    <div class="stage" id="stage">
+      <svg viewBox="0 0 540 960" role="img" aria-label="Animasi isometrik: printer dinyalakan, disambung ke laptop dengan kabel USB, dicek serinya, drivernya dipasang, lalu dokumen dicetak.">
+        <defs>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+@@DEFS@@
+        </defs>
+        <g id="world"></g>
+        <g id="ui"></g>
+      </svg>
+      <div class="cap" id="cap" aria-live="off"></div>
+    </div>
+    <div class="ctl">
+      <button id="pp" type="button">Jeda</button>
+      <button id="snd" type="button">Suara: mati</button>
+      <audio id="au" src="@@AUDIO@@" preload="auto"></audio>
+      <input id="seek" type="range" min="0" max="@@DUR@@" step="0.01" value="0" aria-label="Posisi video">
+      <output id="tm">0:00</output>
+    </div>
+  </div>
+  <div>
+    <div class="eyebrow">Tanya Papa · Computer Things</div>
+    <h1>Cara Pakai Printer Lewat Kabel USB</h1>
+    <p class="lead">Video 2, format 9:16, sekitar 75 detik. Digambar dengan kode (SVG) bergaya isometrik. Narasi Papa memakai suara Ardi (edge-tts) dengan efek suara buatan sendiri. Klik Suara untuk menyalakannya.</p>
+    <h2>Alur adegan</h2>
+    <ol class="scenes" id="scenes"></ol>
+    <h2>Kode warna</h2>
+    <ul class="legend">
+      <li><i style="background:var(--yel)"></i>Bagian yang sedang dijelaskan</li>
+      <li><i style="background:var(--grn)"></i>Berhasil atau menyala</li>
+      <li><i style="background:var(--blu)"></i>Tombol dan tautan di layar</li>
+      <li><i style="background:var(--red)"></i>Peringatan</li>
+    </ul>
+    <h2>Catatan</h2>
+    <p class="note">Merek dan tipe printer di animasi hanyalah contoh (TP-2410). Tampilan situs dan penamaan driver berbeda di tiap merek. Pintasan Ctrl+P berlaku di Windows.</p>
+  </div>
+</div>
+
+<script>
+(()=>{
+const K=2.6,C=.8660254,TZ=-4,CY=430;
+const DUR=@@DUR@@,VEND=@@VEND@@;
+const iso=(x,y,z)=>[(x-y)*C*K,(x+y)*.5*K-z*K];
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const ss=v=>{v=cl(v);return v*v*(3-2*v)};
+const lerp=(a,b,k)=>a+(b-a)*k;
+const P=a=>a.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+const hsl=(c,a=1)=>`hsl(${c[0].toFixed(0)} ${c[1].toFixed(0)}% ${Math.min(96,c[2]).toFixed(0)}% / ${a})`;
+const sh=(c,k)=>[c[0],c[1],c[2]*k];
+const YEL=[48,95,58];
+const mix=(c,a)=>[lerp(c[0],YEL[0],a),lerp(c[1],YEL[1],a),lerp(c[2],YEL[2],a)];
+const hl=(t,a,b)=>ss((t-a)/.5)*(1-ss((t-b)/.5));
+const STK='stroke="rgba(5,10,16,.5)" stroke-width="1" stroke-linejoin="round"';
+function box(x,y,z,w,d,h,c,a=1){
+  const T=[iso(x,y,z+h),iso(x+w,y,z+h),iso(x+w,y+d,z+h),iso(x,y+d,z+h)];
+  const A=[iso(x+w,y,z+h),iso(x+w,y+d,z+h),iso(x+w,y+d,z),iso(x+w,y,z)];
+  const B=[iso(x,y+d,z+h),iso(x+w,y+d,z+h),iso(x+w,y+d,z),iso(x,y+d,z)];
+  return `<g opacity="${a}"><polygon points="${P(A)}" fill="${hsl(sh(c,.72))}" ${STK}/><polygon points="${P(B)}" fill="${hsl(sh(c,.56))}" ${STK}/><polygon points="${P(T)}" fill="${hsl(c)}" ${STK}/></g>`;
+}
+const quad=(pts,fill,ex='')=>`<polygon points="${P(pts.map(p=>iso(p[0],p[1],p[2])))}" fill="${fill}" ${ex}/>`;
+const fqz=(x0,y0,x1,y1,z,fill)=>quad([[x0,y0,z],[x1,y0,z],[x1,y1,z],[x0,y1,z]],fill);
+const qY=(x0,x1,y,za,zb,fill,ex='')=>quad([[x0,y,za],[x1,y,za],[x1,y,zb],[x0,y,zb]],fill,ex);
+const qX=(x,y0,y1,za,zb,fill,ex='')=>quad([[x,y0,za],[x,y1,za],[x,y1,zb],[x,y0,zb]],fill,ex);
+function line(pts,z,stroke,w,a=1){return `<polyline points="${P(pts.map(p=>iso(p[0],p[1],z)))}" fill="none" stroke="${stroke}" stroke-width="${w}" stroke-opacity="${a}" stroke-linecap="round" stroke-linejoin="round"/>`}
+function ringPts(cx,cy,z,r,n=30){const o=[];for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;o.push(iso(cx+Math.cos(a)*r,cy+Math.sin(a)*r,z))}return o}
+function ringXZ(cx,y,cz,r,n=28){const o=[];for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;o.push(iso(cx+Math.cos(a)*r,y,cz+Math.sin(a)*r))}return o}
+const TS=(m,e,txt,fs,fill,wt,anc)=>`<text transform="matrix(${m} ${e[0].toFixed(1)} ${e[1].toFixed(1)})" x="0" y="0" font-size="${fs}" text-anchor="${anc}" style="stroke:none;font-family:Inter,sans-serif;font-weight:${wt};fill:${fill}">${txt}</text>`;
+const tY=(x,y,z,txt,fs,fill,wt=700,anc='start')=>TS(`${(C*K).toFixed(3)} ${(.5*K).toFixed(3)} 0 ${K}`,iso(x,y,z),txt,fs,fill,wt,anc);
+const tX=(x,y,z,txt,fs,fill,wt=700,anc='start')=>TS(`${(C*K).toFixed(3)} ${(-.5*K).toFixed(3)} 0 ${K}`,iso(x,y,z),txt,fs,fill,wt,anc);
+function partial(path,p){
+  const L=[];let tot=0;
+  for(let i=1;i<path.length;i++){const d=Math.hypot(path[i][0]-path[i-1][0],path[i][1]-path[i-1][1]);L.push(d);tot+=d}
+  let s=p*tot;const out=[path[0]];
+  for(let i=0;i<L.length;i++){if(s<=L[i]){const k=s/L[i];out.push([lerp(path[i][0],path[i+1][0],k),lerp(path[i][1],path[i+1][1],k)]);return out}out.push(path[i+1]);s-=L[i]}
+  return out;
+}
+
+
+function rr(x,y,w,d,r,n=6){const cs=[[x+w-r,y+r,-90],[x+w-r,y+d-r,0],[x+r,y+d-r,90],[x+r,y+r,180]],p=[];for(const c of cs)for(let i=0;i<=n;i++){const a=(c[2]+90*i/n)*Math.PI/180;p.push([c[0]+r*Math.cos(a),c[1]+r*Math.sin(a)])}const nm=p.map((q,i)=>{const e=p[(i+1)%p.length],dx=e[0]-q[0],dy=e[1]-q[1],l=Math.hypot(dx,dy)||1;return[dy/l,-dx/l]});return{p,nm}}
+const flat=(poly,z,fill,ex='')=>`<polygon points="${P(poly.p.map(q=>iso(q[0],q[1],z)))}" fill="${fill}" ${ex}/>`;
+function ext(poly,z0,z1,col){let s='';const n=poly.p.length;for(let i=0;i<n;i++){const a=poly.p[i],b=poly.p[(i+1)%n],m=poly.nm[i];if(m[0]+m[1]<=.05)continue;const k=.8-.3*m[1]+.12*m[0];s+=`<polygon points="${P([iso(a[0],a[1],z1),iso(b[0],b[1],z1),iso(b[0],b[1],z0),iso(a[0],a[1],z0)])}" fill="${hsl(sh(col,k))}" stroke="${hsl(sh(col,k))}" stroke-width=".6"/>`}return s}
+const rbox=(x,y,z,w,d,h,r,c)=>{const pl=rr(x,y,w,d,r);return ext(pl,z,z+h,c)+flat(pl,z+h,hsl(c),STK)};
+function extXZ(x,z,w,h,r,y0,y1,col){const pl=rr(x,z,w,h,r);let s='';const n=pl.p.length;
+  for(let i=0;i<n;i++){const a=pl.p[i],b=pl.p[(i+1)%n],m=pl.nm[i];if(m[0]+m[1]<=.05)continue;const k=.8+.12*m[0]+.1*m[1];s+=`<polygon points="${P([iso(a[0],y0,a[1]),iso(b[0],y0,b[1]),iso(b[0],y1,b[1]),iso(a[0],y1,a[1])])}" fill="${hsl(sh(col,k))}" stroke="${hsl(sh(col,k))}" stroke-width=".6"/>`}
+  return s+`<polygon points="${P(pl.p.map(q=>iso(q[0],y1,q[1])))}" fill="${hsl(sh(col,.62))}" ${STK}/>`}
+
+
+function spline(pts,n=8){const out=[];for(let i=0;i<pts.length-1;i++){const p0=pts[Math.max(i-1,0)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(i+2,pts.length-1)];for(let k=0;k<n;k++){const t=k/n,t2=t*t,t3=t2*t;out.push([0,1,2].map(a=>.5*((2*p1[a])+(-p0[a]+p2[a])*t+(2*p0[a]-5*p1[a]+4*p2[a]-p3[a])*t2+(-p0[a]+3*p1[a]-3*p2[a]+p3[a])*t3)))}}out.push(pts[pts.length-1]);return out}
+function cord3(pts,main,w1,w2){
+  const q=pts.map(p=>iso(p[0],p[1],p[2])),sq=pts.map(p=>iso(p[0]+1.5,p[1]+1.5,TZ+.4));
+  const pl=(a,st,w,op=1)=>`<polyline points="${P(a)}" fill="none" stroke="${st}" stroke-width="${w}" stroke-opacity="${op}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  return pl(sq,'#000',w1,.35)+pl(q,'#0b1520',w1)+pl(q,main,w2);
+}
+
+/* ---------- naskah, waktu, kamera ---------- */
+const CAPS=[
+@@CAPS@@
+];
+const q=n=>CAPS[n-1][0],qe=n=>n<CAPS.length?CAPS[n][0]:VEND,ev=(n,f)=>lerp(q(n),qe(n),f);
+const W=(t,a,b)=>ss((t-a)/(b-a));
+const TITLES=['Pembuka','Nyalakan dan sambung','Cek seri printer','Cari dan pasang driver','Cetak dokumen','Penutup'];
+const SCN=[0,q(3),q(5),q(7),q(11),q(14)];
+function sceneAt(t){for(let i=SCN.length-1;i>=0;i--)if(t>=SCN[i])return i;return 0}
+const WIDE=[373,215];
+const KEYS=[[0,.48,WIDE[0],WIDE[1]]];
+const addKey=(t,z,f)=>KEYS.push([t,z,f[0],f[1]]);
+addKey(q(3),.85,[310,350]);addKey(q(4),1.9,iso(255,52,0));addKey(q(5),1.6,iso(220,40,TZ+14));
+addKey(q(7),.48,[373,215]);addKey(q(8),1.5,iso(345,24,TZ+34));addKey(q(13),1.05,iso(135,100,TZ+8));addKey(q(14),.48,WIDE);
+function camAt(t){let k=0;for(let i=0;i<KEYS.length;i++)if(t>=KEYS[i][0])k=i;const cur=KEYS[k],prev=KEYS[Math.max(k-1,0)],b=k===0?1:ss((t-cur[0])/1.0);return{z:lerp(prev[1],cur[1],b),fx:lerp(prev[2],cur[2],b),fy:lerp(prev[3],cur[3],b)}}
+let CAMV={z:1,fx:0,fy:0};
+const toScr=S=>[270+CAMV.z*(S[0]-CAMV.fx),CY+CAMV.z*(S[1]-CAMV.fy)];
+
+/* ---------- meja ---------- */
+function table(){
+  return box(-140,-80,TZ-8,560,320,8,[26,28,22])+quad([[-100,-40,TZ+.2],[380,-40,TZ+.2],[380,200,TZ+.2],[-100,200,TZ+.2]],'hsl(216 20% 13%)','stroke="hsl(216 22% 24%)"');
+}
+
+/* ---------- laptop dan layarnya ---------- */
+const LX=290,LY=20,LW=110,LD=70,SH=64,z0=TZ+4;
+const SXa=LX+6,SXb=LX+LW-6,SZa=z0+8,SZb=z0+SH-6,SY=LY+4.05;
+const ux=u=>SXa+u*(SXb-SXa),vz=v=>SZa+v*(SZb-SZa);
+const sc=(u0,v0,u1,v1,fill,ex='')=>{if(u0===0&&v0===0&&u1===1&&v1===1){const pl=rr(ux(0),vz(0),ux(1)-ux(0),vz(1)-vz(0),3);return `<polygon points="${P(pl.p.map(q=>iso(q[0],SY,q[1])))}" fill="${fill}" ${ex}/>`}return qY(ux(u0),ux(u1),SY,vz(v0),vz(v1),fill,ex)};
+const st=(u,v,txt,fs,fill,wt=700,anc='start')=>tY(ux(u),SY+.02,vz(v),txt,fs,fill,wt,anc);
+const chk=(u,v,s,col)=>`<polyline points="${P([iso(ux(u)-s*.5,SY,vz(v)),iso(ux(u)-s*.1,SY,vz(v)-s*.45),iso(ux(u)+s*.6,SY,vz(v)+s*.5)])}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+function screenUI(t){
+  let s=sc(0,0,1,1,'hsl(214 55% 13%)');
+  const k=t<q(8)?0:t<q(9)?1:t<q(10)?2:t<q(11)?3:t<q(12)?4:t<q(13)?5:t<q(14)?6:0;
+  if(k===0){
+    s+=sc(0,0,1,.1,'hsl(214 30% 22%)');
+    for(let i=0;i<4;i++)s+=sc(.06+i*.09,.72,.12+i*.09,.9,'hsl(214 45% 40%)');
+    const ta=W(t,ev(4,.85),ev(4,.95))*(1-W(t,ev(5,.3),ev(5,.4)));
+    if(ta>.02)s+=`<g opacity="${ta.toFixed(2)}">`+sc(.5,.14,.97,.4,'#fff')+st(.53,.28,'Printer terdeteksi',3.8,'#14307A',800)+st(.53,.19,'tapi belum bisa dipakai',3,'#6b7a90',600)+`</g>`;
+  }else if(k===1){
+    s+=sc(.02,.02,.98,.98,'#f3f6fc')+sc(.02,.86,.98,.98,'hsl(214 30% 80%)')+sc(.1,.88,.9,.96,'#fff');
+    s+=st(.12,.89,'situs-resmi-printer.com',3.4,'#4b5b73',600)+st(.5,.7,'Download Driver',5.2,'#14307A',900,'middle');
+    const full='TP-2410',n=Math.round(full.length*W(t,ev(8,.45),ev(8,.8))),press=t>ev(8,.88);
+    s+=sc(.12,.4,.88,.58,'#fff','stroke="#9fb0c8" stroke-width="1"')+st(.16,.45,full.slice(0,n)+((Math.floor(t*3)%2&&n<full.length)?'|':''),5,'#14307A',800);
+    s+=sc(.28,.12,.72,.3,press?'#ffd84a':'#2b6cf0')+st(.5,.18,'Download',4.6,press?'#14307A':'#fff',800,'middle');
+  }else if(k===2){
+    const a1=W(t,ev(9,.12),ev(9,.22)),a2=W(t,ev(9,.58),ev(9,.68));
+    s+=sc(0,0,1,1,'hsl(214 45% 16%)');
+    if(a1>.01)s+=`<g opacity="${a1.toFixed(2)}">`+sc(.04,.14,.48,.86,'#f3f6fc')+`<polygon points="${P(ringXZ(ux(.26),SY,vz(.6),9))}" fill="#c7d3e6" stroke="#8aa0c0"/><polygon points="${P(ringXZ(ux(.26),SY,vz(.6),2.4))}" fill="#f3f6fc"/>`+chk(.38,.74,5,'#1a9a52')+st(.26,.3,'Ada slot CD',4,'#14307A',800,'middle')+st(.26,.2,'pakai kaset',3.2,'#4b5b73',600,'middle')+`</g>`;
+    if(a2>.01)s+=`<g opacity="${a2.toFixed(2)}">`+sc(.52,.14,.96,.86,'#f3f6fc')+`<polygon points="${P(ringXZ(ux(.74),SY,vz(.6),9))}" fill="#3b82f6" stroke="#1d4ed8"/><polyline points="${P([iso(ux(.74)-9,SY,vz(.6)),iso(ux(.74)+9,SY,vz(.6))])}" stroke="#bcd3ff" stroke-width="1.2"/><polyline points="${P([iso(ux(.74),SY,vz(.6)-9),iso(ux(.74),SY,vz(.6)+9)])}" stroke="#bcd3ff" stroke-width="1.2"/>`+st(.74,.3,'Gak ada slot?',4,'#14307A',800,'middle')+st(.74,.2,'cari online',3.2,'#4b5b73',600,'middle')+`</g>`;
+  }else if(k===3){
+    const pr=W(t,ev(10,.1),ev(10,.8)),done=t>ev(10,.85);
+    s+=sc(.12,.18,.88,.86,'#f3f6fc')+sc(.12,.74,.88,.86,'hsl(214 30% 80%)')+st(.5,.78,'Pasang Driver',4,'#14307A',800,'middle');
+    s+=sc(.2,.44,.8,.56,'#d9e2f1')+sc(.2,.44,.2+.6*pr,.56,done?'#2ecc71':'#2b6cf0');
+    s+=st(.5,.28,done?'Selesai!':'Memasang... '+Math.round(pr*100)+'%',4.2,done?'#1a8f4e':'#14307A',800,'middle');
+  }else if(k===4){
+    s+=sc(0,0,1,1,'hsl(214 30% 28%)')+sc(.26,.06,.74,.96,'#fff')+sc(.26,.86,.74,.96,'#2b6cf0')+st(.5,.9,'Dokumen',3.6,'#fff',800,'middle');
+    for(let i=0;i<7;i++)s+=sc(.31,.74-i*.09,.31+(i%3===2?.26:.38),.77-i*.09,'#c3cfe0');
+  }else if(k===5){
+    const pressed=t>ev(12,.78);
+    s+=sc(.1,.06,.9,.96,'#f4f6fb')+sc(.1,.86,.9,.96,'#2b6cf0')+st(.14,.89,'Print',4,'#fff',800);
+    s+=sc(.14,.58,.86,.76,'#dbe8ff','stroke="#2b6cf0" stroke-width="1"')+st(.18,.64,'TP-2410 (USB)',4,'#14307A',800);
+    s+=st(.14,.46,'Salinan',3.6,'#4b5b73',700)+sc(.34,.4,.5,.54,'#fff','stroke="#9fb0c8" stroke-width="1"')+st(.42,.44,'1',4,'#14307A',800,'middle');
+    s+=sc(.6,.12,.86,.3,pressed?'#ffd84a':'#2b6cf0')+st(.73,.18,'Print',4.4,pressed?'#14307A':'#fff',900,'middle');
+  }else{
+    const pr=W(t,ev(13,.1),ev(13,.8)),done=t>ev(13,.9);
+    s+=sc(.2,.3,.8,.72,'#f3f6fc')+st(.5,.55,done?'Selesai!':'Mencetak...',5,done?'#1a8f4e':'#14307A',800,'middle')+sc(.28,.38,.72,.46,'#d9e2f1')+sc(.28,.38,.28+.44*pr,.46,done?'#2ecc71':'#2b6cf0');
+  }
+  return s;
+}
+function laptop(t){
+  let s=rbox(LX,LY,TZ,LW,LD,4,7,[214,14,46]);
+  const kx0=LX+LW*.05,kx1=LX+LW*.95,ky0=LY+LD*.08,ky1=LY+LD*.62,cw=(kx1-kx0)/13,ch=(ky1-ky0)/5;
+  s+=flat(rr(kx0-1,ky0-1,kx1-kx0+2,ky1-ky0+2,3),z0+.05,'hsl(214 16% 20%)');
+  for(let r=0;r<5;r++)for(let c=0;c<13;c++)s+=fqz(kx0+c*cw+cw*.12,ky0+r*ch+ch*.12,kx0+(c+1)*cw-cw*.12,ky0+(r+1)*ch-ch*.12,z0+.12,'hsl(214 14% 34%)');
+  s+=flat(rr(LX+LW*.36,LY+LD*.7,LW*.28,LD*.24,3),z0+.05,'hsl(214 14% 38%)','stroke="rgba(5,10,16,.35)" stroke-width="1"');
+  s+=box(LX+8,LY-1.2,z0,LW-16,3,2.2,[214,12,14]);
+  s+=extXZ(LX,z0,LW,SH,6,LY,LY+4,[214,18,24]);
+  s+=screenUI(t);
+  const cam=ringXZ(LX+LW/2,SY+.02,z0+SH-3.2,.9,8);
+  s+=`<polygon points="${P(cam)}" fill="#0b1520"/>`;
+  return s;
+}
+
+/* ---------- kabel USB ---------- */
+const PX=50,PY=-20,PW=170,PD=110,PH=42;
+const CABP=spline([[234,34,TZ+5],[245,39,TZ+1.8],[257,56,TZ+1.6],[264,68,TZ+1.6],[273,64,TZ+1.8],[LX-16,52,TZ+2.4]],8);
+function cable(t){
+  const p=W(t,ev(4,.25),ev(4,.75));
+  if(p<=.001)return'';
+  const hc=hl(t,ev(4,.25),ev(4,.95)),n=Math.max(2,Math.ceil(p*(CABP.length-1))+1),pts=CABP.slice(0,n);
+  let s=`<g ${hc>.05?'filter="url(#glow)"':''}>`+cord3(pts,hc>.3?'#ffd84a':'#e6edf8',6,3)+`</g>`;
+  s+=box(PX+PW,32,TZ+3.2,5,4.4,3.6,[210,8,72])+box(PX+PW+5,31.4,TZ+2.8,9,5.6,4.4,[0,0,14]);
+  if(p>.97)s+=box(LX-6,50,TZ+1,6,4,1.8,[210,10,78])+box(LX-16,49,TZ+.6,10,6,3.6,[0,0,14])+fqz(LX-5,51,LX-1,53,TZ+2.85,'#1a2030');
+  return s;
+}
+
+/* ---------- printer ---------- */
+function printer(t){
+  const pressT=ev(3,.62),on=t>=pressT+.12,pd=(t>pressT&&t<pressT+.22)?1:0;
+  const hP=hl(t,ev(3,.45),q(4)),hS=hl(t,ev(5,.1),q(7)),hSt=hl(t,ev(6,.15),q(7));
+  const g=(h,inner)=>`<g ${h>.05?'filter="url(#glow)"':''}>${inner}</g>`;
+  let s='';
+  [[PX+14,PY+12],[PX+PW-30,PY+12],[PX+14,PY+PD-24],[PX+PW-30,PY+PD-24]].forEach(f=>{s+=box(f[0],f[1],TZ-1.6,16,12,1.6,[0,0,12])});
+  s+=rbox(PX,PY,TZ,PW,PD,PH,18,[215,8,84]);
+  s+=flat(rr(PX+3,PY+3,PW-6,PD-6,16),TZ+PH+.05,'rgba(255,255,255,.18)');
+  s+=rbox(PX+8,PY+8,TZ+PH,PW-16,76,5,12,[215,8,92]);
+  s+=flat(rr(PX+16,PY+14,PW-34,60,6),TZ+PH+5.05,'hsl(214 25% 20%)')+flat(rr(PX+24,PY+20,56,10,3),TZ+PH+5.1,'rgba(255,255,255,.1)');
+  s+=box(PX+22,PY+4,TZ+PH+5,118,3,24,[0,0,97])+line([[PX+30,PY+5.6],[PX+120,PY+5.6]],TZ+PH+22,'#b9c4d4',1.2);
+  s+=rbox(PX+98,PY+80,TZ+PH,60,24,4,5,[214,14,18]);
+  const bz=TZ+PH+4.1-pd*.6;
+  s+=g(hP,`<polygon points="${P(ringPts(PX+112,PY+93,bz,4.4,18))}" fill="${hsl(mix([214,10,60],hP))}" stroke="#0b1520"/>`);
+  s+=`<polygon points="${P(ringPts(PX+128,PY+93,TZ+PH+4.1,1.7,10))}" fill="${on?'#35d27f':'#33414f'}"/>`;
+  s+=`<polygon points="${P(ringPts(PX+134,PY+93,TZ+PH+4.1,1.7,10))}" fill="#4a5568"/>`;
+  s+=flat(rr(PX+140,PY+86,16,13,2),TZ+PH+4.1,on?'hsl(200 70% 42%)':'hsl(214 15% 12%)');
+  s+=qY(PX+24,PX+PW-24,PY+PD,TZ+10,TZ+17,'hsl(214 15% 10%)');
+  s+=line([[PX+22,PY+PD],[PX+PW-22,PY+PD]],TZ+21,'rgba(0,0,0,.2)',1.2);
+  s+=rbox(PX+22,PY+PD,TZ+4,126,34,2.5,4,[215,8,72]);
+  const fx=PX+PW+.1;
+  for(let k=0;k<6;k++)s+=`<polyline points="${P([iso(fx,PY+58+k*3.2,TZ+30),iso(fx,PY+58+k*3.2,TZ+36)])}" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/>`;
+  s+=qX(PX+PW,31.5,36.5,TZ+3,TZ+7,'#0b1520')+qX(PX+PW,59.5,64.5,TZ+3,TZ+7,'#0b1520')+box(PX+PW,59.5,TZ+2.8,9,5.4,4.4,[0,0,14])+box(PX+PW+9,60,TZ+3.2,5,4.4,3.6,[0,0,18]);
+  s+=g(hS,qX(PX+PW,PY+10,PY+50,TZ+8,TZ+30,'#fff','stroke="#8aa0c0" stroke-width="1"'));
+  s+=tX(fx,PY+47,TZ+27,'MODEL',3.4,'#6b7a90',700)+tX(fx,PY+47,TZ+19,'TP-2410',9,hSt>.3?'#a06a00':'#14307A',900)+tX(fx,PY+47,TZ+11.5,'S/N 8K3-2210',3.2,'#6b7a90',600);
+  for(let k=0;k<9;k++){const yy=PY+16+k*2.4;s+=`<polyline points="${P([iso(fx,yy,TZ+9),iso(fx,yy,TZ+10.2)])}" stroke="#14307A" stroke-width="${k%3?1:1.8}"/>`}
+  if(hSt>.05)s+=`<polyline points="${P([iso(fx,PY+47,TZ+17),iso(fx,PY+13,TZ+17)])}" stroke="#ffd23f" stroke-opacity="${hSt.toFixed(2)}" stroke-width="3"/>`;
+  return s;
+}
+function paperOut(t){
+  const p=W(t,ev(13,.2),ev(13,.9));if(p<=.001)return'';
+  const L=76*p;let s=box(PX+30,PY+PD,TZ+4.6,110,L,.6,[0,0,100]);
+  for(let k=0;k<4;k++){const yy=PY+PD+L*(.2+.2*k);if(yy<PY+PD+L-3)s+=line([[PX+38,yy],[PX+38+(k%2?70:92),yy]],TZ+5.3,'#9aa8bf',1.6)}
+  return s;
+}
+function cord(t){
+  const pl=W(t,ev(3,.08),ev(3,.32)),zp=lerp(TZ+26,TZ+6.2,pl),inl=pl>=1;
+  let s=rbox(262,98,TZ,64,18,6,4,[214,6,92]);
+  for(let k=0;k<3;k++){const cx=270+k*18;s+=flat(rr(cx,102,12,10,2.5),TZ+6.05,'#1a2030')+line([[cx+3.5,105],[cx+3.5,109]],TZ+6.1,'#c9d2e0',1.1)+line([[cx+8.5,105],[cx+8.5,109]],TZ+6.1,'#c9d2e0',1.1)}
+  s+=flat(rr(318,100,6,6,1.5),TZ+6.05,inl?'#35d27f':'#8a97a8');
+  s+=cord3(spline([[PX+PW+14,62,TZ+5],[244,70,TZ+1.6],[254,84,TZ+1.6],[266,96,TZ+1.6],[278,100,TZ+1.8],[288,107,zp+8]],8),'#3a4658',6,3);
+  const pr=zp-(TZ+6);
+  if(pr>.3)s+=box(291,105,TZ+6,1.6,1.2,pr,[210,10,72])+box(296,105,TZ+6,1.6,1.2,pr,[210,10,72]);
+  s+=box(289,103,zp,10,8,12,[0,0,90])+line([[291,104.6],[297,104.6]],zp+12.05,'#b4bdcb',1)+line([[291,106.4],[297,106.4]],zp+12.05,'#b4bdcb',1);
+  return s;
+}
+
+/* ---------- lapisan UI ---------- */
+function lab(t,a,b,wp,off,txt,sub,color){
+  const al=ss((t-a)/.4)*(1-ss((t-b+.4)/.4));if(al<.02)return'';
+  const p=toScr(iso(wp[0],wp[1],wp[2])),x=p[0]+off[0],y=p[1]+off[1];
+  const anc=off[0]<0?'end':'start',tx=x+(off[0]<0?-6:6);
+  return `<g opacity="${al.toFixed(2)}"><line x1="${p[0].toFixed(1)}" y1="${p[1].toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${color}" stroke-width="2"/><circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4" fill="${color}"/><text x="${tx.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="${anc}" font-size="23">${txt}</text>${sub?`<text class="sub" x="${tx.toFixed(1)}" y="${(y+25).toFixed(1)}" text-anchor="${anc}" font-size="17">${sub}</text>`:''}</g>`;
+}
+const bub=(p,txt,a,ok)=>`<g opacity="${a.toFixed(2)}" transform="translate(${p[0].toFixed(1)} ${p[1].toFixed(1)})"><path d="M-34 -24 h68 a10 10 0 0 1 10 10 v28 a10 10 0 0 1 -10 10 h-22 l-8 12 l-4 -12 h-34 a10 10 0 0 1 -10 -10 v-28 a10 10 0 0 1 10 -10z" fill="${ok?'#d9f7e6':'#fff'}" stroke="#14307A" stroke-width="3"/>${ok?`<polyline points="-14,0 -4,10 16,-10" fill="none" stroke="#1a9a52" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`:`<text x="0" y="11" text-anchor="middle" style="stroke:none;fill:#14307A;font-family:Nunito,sans-serif;font-weight:900;font-size:30px">${txt}</text>`}</g>`;
+const key=(x,y,w,txt,flash,a)=>`<g opacity="${a.toFixed(2)}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><rect x="${-w/2}" y="-27" width="${w}" height="54" rx="11" fill="${flash?'#ffd84a':'#f3f6fc'}" stroke="#14307A" stroke-width="3"/><text x="0" y="10" text-anchor="middle" style="stroke:none;fill:#14307A;font-family:Nunito,sans-serif;font-weight:900;font-size:26px">${txt}</text></g>`;
+function ui(t){
+  let s='';
+  const ti=1-ss((t-(q(3)-.8))/.6);
+  if(ti>.02)s+=`<g opacity="${ti.toFixed(2)}"><text class="sub" x="270" y="92" text-anchor="middle" font-size="19" style="letter-spacing:.2em">CARA PAKAI</text><text x="270" y="138" text-anchor="middle" font-size="36">Printer Lewat Kabel USB</text></g>`;
+  const Y='hsl(48 95% 58%)',G='hsl(150 70% 55%)';
+  s+=lab(t,ev(3,.08),ev(3,.5),[294,107,TZ+16],[-40,70],'Colokan listrik','colok kabel printer',Y);
+  s+=lab(t,ev(3,.62),q(4),[PX+112,PY+93,TZ+46],[60,-80],'Tombol power','lampu hijau menyala',Y);
+  s+=lab(t,ev(4,.45),q(5),[262,62,TZ+3],[50,-90],'Kabel USB','dari printer ke laptop',Y);
+  s+=lab(t,ev(5,.15),q(6),[PX+PW,30,TZ+20],[-30,-110],'Stiker seri','depan atau belakang',Y);
+  s+=lab(t,ev(6,.2),q(7),[PX+PW,30,TZ+19],[-30,-110],'Tipe printer','huruf dan angka',Y);
+  s+=lab(t,ev(13,.4),q(14),[PX+90,PY+PD+30,TZ+6],[70,60],'Hasil cetak','kertas keluar',G);
+  if(t>=q(7)&&t<q(8)){
+    const a=W(t,ev(7,.05),ev(7,.15)),b=W(t,ev(7,.45),ev(7,.55));
+    const pl=toScr(iso(345,40,95)),pp=toScr(iso(135,10,80)),pm=[(pl[0]+pp[0])/2,(pl[1]+pp[1])/2+16];
+    if(b>.01)s+=`<g opacity="${b.toFixed(2)}"><line x1="${pl[0].toFixed(1)}" y1="${(pl[1]+30).toFixed(1)}" x2="${pm[0].toFixed(1)}" y2="${pm[1].toFixed(1)}" stroke="#ffd84a" stroke-width="3" stroke-dasharray="6 6"/><line x1="${pp[0].toFixed(1)}" y1="${(pp[1]+30).toFixed(1)}" x2="${pm[0].toFixed(1)}" y2="${pm[1].toFixed(1)}" stroke="#ffd84a" stroke-width="3" stroke-dasharray="6 6"/><g transform="translate(${pm[0].toFixed(1)} ${pm[1].toFixed(1)})"><rect x="-70" y="-23" width="140" height="46" rx="23" fill="#ffd23f" stroke="#14307A" stroke-width="3"/><text x="0" y="9" text-anchor="middle" style="stroke:none;fill:#14307A;font-family:Nunito,sans-serif;font-weight:900;font-size:26px">DRIVER</text></g></g>`;
+    s+=bub(pl,'???',a,b>.8)+bub(pp,'???',a,b>.8);
+  }
+  if(t>=q(11)&&t<q(12)){
+    const c=toScr(iso(345,24,TZ+SH+30)),a1=W(t,ev(11,.66),ev(11,.72)),a2=W(t,ev(11,.8),ev(11,.86));
+    s+=key(c[0]-62,c[1],96,'Ctrl',t>ev(11,.7)&&t<ev(11,.9),a1)+`<text x="${c[0].toFixed(1)}" y="${(c[1]+10).toFixed(1)}" text-anchor="middle" opacity="${a2.toFixed(2)}" font-size="28">+</text>`+key(c[0]+58,c[1],60,'P',t>ev(11,.84)&&t<ev(11,.95),a2);
+  }
+  if(t>ev(13,.9)&&t<q(14)+1.5){
+    const c=toScr(iso(135,40,TZ+66)),a=W(t,ev(13,.9),ev(13,.97))*(1-W(t,q(14)+.6,q(14)+1.4));
+    s+=`<g opacity="${a.toFixed(2)}" transform="translate(${c[0].toFixed(1)} ${c[1].toFixed(1)})"><circle r="30" fill="#2ecc71" stroke="#fff" stroke-width="4"/><polyline points="-14,0 -4,11 15,-11" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  }
+  return s;
+}
+@@BRAND@@
+/* ---------- loop ---------- */
+const world=document.getElementById('world'),uiEl=document.getElementById('ui'),capEl=document.getElementById('cap');
+const seek=document.getElementById('seek'),tm=document.getElementById('tm'),pp=document.getElementById('pp');
+let t=0,playing=true,last=performance.now(),capLine=-1,words=[],starts=[];
+const fmt=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+function capAt(x){let r=0;for(let i=0;i<CAPS.length;i++)if(x>=CAPS[i][0])r=i;return r}
+function buildCaption(i){
+  capLine=i;const [a,b,txt,wst]=CAPS[i];
+  const ws=txt.split(' '),wt=ws.map(w=>w.length+1+(w.includes('...')?9:0)),tot=wt.reduce((x,y)=>x+y,0),span=(b-a)-.35;
+  let acc=0;starts=[];capEl.style.fontSize=txt.length>90?'4.7cqw':'';
+  capEl.innerHTML='';words=ws.map((w,k)=>{starts.push(wst&&wst.length===ws.length?wst[k]:a+.05+span*acc/tot);acc+=wt[k];const e=document.createElement('span');e.className='w';e.textContent=w;capEl.appendChild(e);capEl.appendChild(document.createTextNode(' '));return e});
+}
+function render(){
+  const i=sceneAt(t),c=camAt(t);CAMV={z:c.z,fx:c.fx,fy:c.fy};
+  world.setAttribute('transform',`translate(270 ${CY}) scale(${CAMV.z.toFixed(3)}) translate(${(-CAMV.fx).toFixed(1)} ${(-CAMV.fy).toFixed(1)})`);
+  world.innerHTML=table()+printer(t)+paperOut(t)+cable(t)+laptop(t)+cord(t);
+  uiEl.innerHTML=ui(t)+brand(t);
+  const ci=capAt(t);if(ci!==capLine)buildCaption(ci);
+  capEl.style.opacity=(1-ss((t-VEND-.1)/.5)).toFixed(2);
+  let cur=-1;starts.forEach((s,k)=>{if(t>=s)cur=k});
+  words.forEach((w,k)=>{w.className='w'+(k<cur?' on':'')+(k===cur?' on cur':'')});
+  seek.value=t;tm.textContent=`${fmt(t)} / ${fmt(DUR)}`;
+  document.querySelectorAll('#scenes button').forEach((b,k)=>b.setAttribute('aria-current',k===i?'true':'false'));
+}
+const au=document.getElementById('au'),snd=document.getElementById('snd');
+au.muted=true;
+function auSync(){try{au.currentTime=Math.min(t,DUR-.02)}catch(e){}}
+function auPlay(){if(playing){auSync();const p=au.play();if(p&&p.catch)p.catch(()=>{})}else au.pause()}
+function tick(now){
+  const dt=Math.min(.1,(now-last)/1000);last=now;
+  if(playing){
+    t+=dt;
+    if(t>=DUR){t=0;auPlay()}
+    else if(!au.paused&&au.readyState>1&&Math.abs(au.currentTime-t)>.25)auSync();
+    render();
+  }
+  requestAnimationFrame(tick);
+}
+const list=document.getElementById('scenes');
+TITLES.forEach((ti,k)=>{
+  const li=document.createElement('li'),b=document.createElement('button');
+  b.type='button';b.innerHTML=`<span class="n">${k+1}</span><span>${ti}</span><span class="tm">${fmt(SCN[k])}</span>`;
+  b.addEventListener('click',()=>{t=SCN[k]+.01;auSync();render()});
+  li.appendChild(b);list.appendChild(li);
+});
+pp.addEventListener('click',()=>{playing=!playing;pp.textContent=playing?'Jeda':'Putar';auPlay()});
+snd.addEventListener('click',()=>{au.muted=!au.muted;snd.textContent=au.muted?'Suara: mati':'Suara: nyala';if(!au.muted)auPlay()});
+seek.addEventListener('input',()=>{t=parseFloat(seek.value);auSync();render()});
+window.__seek=v=>{playing=false;pp.textContent='Putar';au.pause();t=v;auSync();render()};
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){playing=false;pp.textContent='Putar';t=14}
+render();if(playing)auPlay();requestAnimationFrame(n=>{last=n;tick(n)});
+})();
+</script>

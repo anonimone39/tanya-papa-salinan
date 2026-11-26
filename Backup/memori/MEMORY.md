@@ -1,0 +1,1 @@
+- [Tanya Papa: aturan proyek](tanya-papa-rules.md) — akun edukasi "papa mengajari anak"; form 4 baris, kategori, judul per platform, caption, kompres video
